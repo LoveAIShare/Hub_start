@@ -22,22 +22,12 @@ description: 打开工具箱网站，并在工具箱全站导航中定位工具/
 
 ## 执行方式
 
-使用桌面控制（computer_use_tool, plane="cu"）打开默认浏览器并加载目标 URL：
+直接用系统命令打开默认浏览器，不要先用 computer_use_tool 启动 Chrome（内置的 Chrome 固定应用标识经常失效，会白等数秒）：
 
-```python
-import seed_computer_use as cu
-import time
-
-# 启动 Chrome
-cu.launch_app("Google Chrome#0063457ddf2ec9266eba504e3522f88b1467207224")
-time.sleep(3)
-
-# 点击地址栏并输入 URL
-cu.click(150, 30)
-time.sleep(0.5)
-cu.type("https://tx3240.t.taoxiangyoushu.com/desktop")
-time.sleep(0.5)
-cu.press("Enter")
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/open.ps1
 ```
 
-窗口保持打开状态，不会自动关闭。
+脚本内容为 `Start-Process "https://tx3240.t.taoxiangyoushu.com/desktop"`，浏览器窗口保持打开，不会自动关闭。
+
+浏览器打开后，如需按层级点击分类或工具，再用桌面控制操作已打开的窗口，不要重复启动浏览器。仅当系统命令执行失败时，才退回 computer_use_tool 启动浏览器。
